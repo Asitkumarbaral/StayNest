@@ -1,40 +1,51 @@
-const fs = require("fs");
-const path = require("path");
-const rootDir = require("../utils/path.utils");
-const { log } = require("console");
+const { mongo, Schema, default: mongoose } = require("mongoose");
 
-const favDataPath = path.join(rootDir, "data", "favourite.json");
-module.exports = class fav {
-  static addtofav(homeId, callback = () => {}) {
-    fav.getTofav((favorites) => {
-      if (favorites.includes(homeId)) {
-        callback("Home is already marked favourite");
-      } else {
-        favorites.push(homeId);
-        fs.writeFile(favDataPath, JSON.stringify(favorites),err=>{
-          if (err) {
-            callback("Error writing to file");
-          } else {
-            callback("Home marked as favourite successfully");
-          }
-        });
-      }
-    });
-  }
-  static getTofav(callback) {
-    fs.readFile(favDataPath, (err, data) => {
-      if (err) {
-       console.log("Error reading file:", err);
-        callback("Error reading file");
-      } else {
-        try {
-          const parsedData = JSON.parse(data.toString() || '[]');
-          callback(Array.isArray(parsedData) ? parsedData : []);
-        } catch (e) {
-          // JSON parsing error (e.g., file was empty or invalid JSON)
-          callback([]);
-        }
-      }
-    });
-  }
-} 
+
+const FavoriteScema=new  mongoose.Schema({
+     houseId:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"Home",
+      required:true,
+      unique:true
+
+
+     }
+})
+const Favhome=mongoose.model('Favhome',FavoriteScema);
+module.exports=Favhome;
+//  constructor(houseId) {
+//           this.houseId = houseId;
+//   }
+// }
+  
+//  save() {
+//     const db = getDb();
+//     return db.collection('favourite').findOne({ houseId: this.houseId }).then((existingFav) => {
+//       if (!existingFav) {
+       
+//          return db.collection('favourite').insertOne(this);
+//       } else {
+        
+//           return new Promise((resolve, reject) => {
+//             resolve({ message: 'Already exists' });
+//           });
+//       }
+//     });
+   
+//   }
+  
+//   // static deleteById(delHomeId, callback) {
+  
+//   // }
+
+//   static removeById(removeId){
+//          const db = getDb();
+//          return db.collection('favourite').deleteOne({ houseId: removeId });
+//   }
+//  static getTofav(){
+//     const db = getDb();
+//     return db.collection('favourite').find().toArray()
+//   }
+//  }
+
+

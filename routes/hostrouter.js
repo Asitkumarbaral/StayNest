@@ -9,7 +9,10 @@ hostRouter.get("/add-home",hostcontroller.getAddHome)
 
  hostRouter.get("/home-list",hostcontroller.gethostHome);
  hostRouter.get("/edit-home/:homeId",hostcontroller.getEdithome)
-
+ //edit home 
+ hostRouter.post("/edit-home",hostcontroller.postEdithome)
+ //delete home
+ hostRouter.post("/home-delete/:homeId",hostcontroller.postDeleteHome);
   exports.hostRouter=hostRouter;
  
   

@@ -1,6 +1,6 @@
-<form action="/favourite" method="POST">
-    <button type="submit" class="bg-green-300 p-2 hover:bg-green-500">Add to Favourite</button>
-    <input type="hidden" name="id" value="<%= home.id %>">
-  </form>
 
-  
+
+  <form action="/favourite/<%= home._id %>" method="post">
+       <button type="submit" class="bg-green-300 p-2 hover:bg-green-500">Add to Favourite</button>
+    <input type="hidden" name="_id" value="<%= home._id %>">
+  </form>
