@@ -8,6 +8,11 @@ const errorController=require('./controllers/error')
 
 const { default: mongoose } = require('mongoose');
 const session=require('express-session');
+const MongoDBStore=require('connect-mongodb-session')(session);
+const store=new MongoDBStore({
+    uri:'mongodb+srv://asitkumar:Asit1234@cluster0.e63fg.mongodb.net/staynest?retryWrites=true&w=majority&appName=Cluster0',
+    collection:'Sessions'
+})
 const authrouter=require('./routes/authrouter')
 const app=express()
 // app.use((req,res,next)=>{
@@ -26,6 +31,7 @@ const rootDir=require('./utils/path.utils')
  app.use(session({
    secret: 'mysecrete',
    resave: false,
+   store: store,
    saveUninitialized: true
 }))
 app.use((req,res,next)=>{
